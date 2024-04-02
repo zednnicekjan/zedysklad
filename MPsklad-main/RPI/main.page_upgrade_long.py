@@ -273,16 +273,16 @@ hlavni_text_Z.hide()
 
 
 #Pokud není tlačítko zmáčknuté - zobrazí se toto
-Policko_9 = PushButton(regal, Policko9, image = "logo_do_regalu.png", grid=[0,0])
-Policko_8 = PushButton(regal, Policko8, image = "logo_do_regalu.png", grid=[1,0])
-Policko_7 = PushButton(regal, Policko7, image = "logo_do_regalu.png", grid=[2,0])
-Policko_6 = PushButton(regal, Policko6, image = "logo_do_regalu.png", grid=[3,0])
-Policko_5 = PushButton(regal, Policko5, image = "logo_do_regalu.png", grid=[4,0])
-Policko_4 = PushButton(regal, Policko4, image = "logo_do_regalu.png", grid=[0,1])
-Policko_3 = PushButton(regal, Policko3, image = "logo_do_regalu.png", grid=[1,1])
-Policko_2 = PushButton(regal, Policko2, image = "logo_do_regalu.png", grid=[2,1])
-Policko_1 = PushButton(regal, Policko1, image = "logo_do_regalu.png", grid=[3,1])
-Policko_0 = PushButton(regal, Policko0, image = "logo_do_regalu.png", grid=[4,1])
+Policko_9 = PushButton(regal, Policko9, image = "logo_do_regalu_off.png", grid=[0,0])
+Policko_8 = PushButton(regal, Policko8, image = "logo_do_regalu_off.png", grid=[1,0])
+Policko_7 = PushButton(regal, Policko7, image = "logo_do_regalu_off.png", grid=[2,0])
+Policko_6 = PushButton(regal, Policko6, image = "logo_do_regalu_off.png", grid=[3,0])
+Policko_5 = PushButton(regal, Policko5, image = "logo_do_regalu_off.png", grid=[4,0])
+Policko_4 = PushButton(regal, Policko4, image = "logo_do_regalu_off.png", grid=[0,1])
+Policko_3 = PushButton(regal, Policko3, image = "logo_do_regalu_off.png", grid=[1,1])
+Policko_2 = PushButton(regal, Policko2, image = "logo_do_regalu_off.png", grid=[2,1])
+Policko_1 = PushButton(regal, Policko1, image = "logo_do_regalu_off.png", grid=[3,1])
+Policko_0 = PushButton(regal, Policko0, image = "logo_do_regalu_off.png", grid=[4,1])
 
 #________________________________________________________________________________________________
 
@@ -353,16 +353,16 @@ hlavni_text_V.font = "Calibry"
 hlavni_text_V.hide()
 
 
-Policko_9 = PushButton(regal2, Policko9, image = "logo_do_regalu.png", grid=[0,0])
-Policko_8 = PushButton(regal2, Policko8, image = "logo_do_regalu.png", grid=[1,0])
-Policko_7 = PushButton(regal2, Policko7, image = "logo_do_regalu.png", grid=[2,0])
-Policko_6 = PushButton(regal2, Policko6, image = "logo_do_regalu.png", grid=[3,0])
-Policko_5 = PushButton(regal2, Policko5, image = "logo_do_regalu.png", grid=[4,0])
-Policko_4 = PushButton(regal2, Policko4, image = "logo_do_regalu.png", grid=[0,1])
-Policko_3 = PushButton(regal2, Policko3, image = "logo_do_regalu.png", grid=[1,1])
-Policko_2 = PushButton(regal2, Policko2, image = "logo_do_regalu.png", grid=[2,1])
-Policko_1 = PushButton(regal2, Policko1, image = "logo_do_regalu.png", grid=[3,1])
-Policko_0 = PushButton(regal2, Policko0, image = "logo_do_regalu.png", grid=[4,1])
+Policko_9 = PushButton(regal2, Policko9, image = "logo_do_regalu_off.png", grid=[0,0])
+Policko_8 = PushButton(regal2, Policko8, image = "logo_do_regalu_off.png", grid=[1,0])
+Policko_7 = PushButton(regal2, Policko7, image = "logo_do_regalu_off.png", grid=[2,0])
+Policko_6 = PushButton(regal2, Policko6, image = "logo_do_regalu_off.png", grid=[3,0])
+Policko_5 = PushButton(regal2, Policko5, image = "logo_do_regalu_off.png", grid=[4,0])
+Policko_4 = PushButton(regal2, Policko4, image = "logo_do_regalu_off.png", grid=[0,1])
+Policko_3 = PushButton(regal2, Policko3, image = "logo_do_regalu_off.png", grid=[1,1])
+Policko_2 = PushButton(regal2, Policko2, image = "logo_do_regalu_off.png", grid=[2,1])
+Policko_1 = PushButton(regal2, Policko1, image = "logo_do_regalu_off.png", grid=[3,1])
+Policko_0 = PushButton(regal2, Policko0, image = "logo_do_regalu_off.png", grid=[4,1])
 
 #_____________________________________________________________________________________________________
 
