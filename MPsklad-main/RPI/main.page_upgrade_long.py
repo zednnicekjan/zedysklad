@@ -301,7 +301,7 @@ def zobraz_obrazky():
 # Neustálá aktualizace obrázků
 while True:
     zobraz_obrazky()
-    time.sleep(1)  # Počkej 1 sekundu, než se obrázky aktualizují
+    time.sleep(30)  # Počkej 1 sekundu, než se obrázky aktualizují
 
 
 
@@ -403,7 +403,7 @@ def zobraz_obrazky():
 # Neustálá aktualizace obrázků
 while True:
     zobraz_obrazky()
-    time.sleep(1)  # Počkej 1 sekundu, než se obrázky aktualizují
+    time.sleep(30)  # Počkej 1 sekundu, než se obrázky aktualizují
 
 
 
