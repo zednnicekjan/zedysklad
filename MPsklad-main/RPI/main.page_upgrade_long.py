@@ -35,6 +35,13 @@ def mereni_senzoru():
 from threading import Thread
 thread = Thread(target=mereni_senzoru)
 thread.start()
+# Funkce pro zobrazení obrázků na základě stavu pole
+def zobraz_obrazky():
+    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
+        if pole[index] == 1:
+            policko.image = "logo_do_regalu_on.png"
+        else:
+            policko.image = "logo_do_regalu_off.png"
 
 #Zde jdu kontrolovat napájení arduina. Pokud nebude arduino napájené, tak vyskočí error okno na panelu.
 arduino = Button(17)
@@ -272,13 +279,7 @@ hlavni_text_Z.hide()
 
 
 
-# Funkce pro zobrazení obrázků na základě stavu pole
-def zobraz_obrazky():
-    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
-        if pole[index] == 1:
-            policko.image = "logo_do_regalu_on.png"
-        else:
-            policko.image = "logo_do_regalu_off.png"
+
 
 # Vytvoření tlačítek s obrazky
 Policko_9 = PushButton(regal, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
