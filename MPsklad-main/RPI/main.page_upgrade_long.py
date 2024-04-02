@@ -278,7 +278,6 @@ hlavni_text_Z.hide()
 
 
 
-# Vaše stávající inicializace tlačítek
 Policko_9 = PushButton(regal, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
 Policko_8 = PushButton(regal, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
 Policko_7 = PushButton(regal, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
@@ -298,10 +297,13 @@ def zobraz_obrazky():
         else:
             policko.image = "logo_do_regalu_off.png"
 
-# Neustálá aktualizace obrázků
+# Neustálá aktualizace obrázků jen v případě změny stavu pole
+last_pole = list(pole)
 while True:
-    zobraz_obrazky()
-    time.sleep(30)  # Počkej 1 sekundu, než se obrázky aktualizují
+    if pole != last_pole:
+        zobraz_obrazky()
+        last_pole = list(pole)
+    time.sleep(30)  # Počkej 30 sekund, než se provede další kontrola změny stavu
 
 
 
@@ -380,7 +382,6 @@ hlavni_text_V.hide()
 
 
 
-# Vaše stávající inicializace tlačítek
 Policko_9 = PushButton(regal2, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
 Policko_8 = PushButton(regal2, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
 Policko_7 = PushButton(regal2, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
@@ -400,10 +401,14 @@ def zobraz_obrazky():
         else:
             policko.image = "logo_do_regalu_off.png"
 
-# Neustálá aktualizace obrázků
+# Neustálá aktualizace obrázků jen v případě změny stavu pole
+last_pole = list(pole)
 while True:
-    zobraz_obrazky()
-    time.sleep(30)  # Počkej 1 sekundu, než se obrázky aktualizují
+    if pole != last_pole:
+        zobraz_obrazky()
+        last_pole = list(pole)
+    time.sleep(30)  # Počkej 30 sekund, než se provede další kontrola změny stavu
+
 
 
 
