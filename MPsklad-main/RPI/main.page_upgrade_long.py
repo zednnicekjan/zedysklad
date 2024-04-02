@@ -36,7 +36,6 @@ from threading import Thread
 thread = Thread(target=mereni_senzoru)
 thread.start()
 
-zobraz_obrazky()
 #Zde jdu kontrolovat napájení arduina. Pokud nebude arduino napájené, tak vyskočí error okno na panelu.
 arduino = Button(17)
 
@@ -271,7 +270,7 @@ hlavni_text_Z.text_size = 55
 hlavni_text_Z.font = "Calibry"
 hlavni_text_Z.hide()
 
-from guizero import *
+
 
 # Funkce pro zobrazení obrázků na základě stavu pole
 def zobraz_obrazky():
