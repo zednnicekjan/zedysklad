@@ -5,34 +5,37 @@ import serial.tools.list_ports
 import serial
 import sys
 import time
+
 app = App (height=480, width=800)
 app.bg = "#ff4d06"
-global stavy_senzoru
-# Nastavení pinů GPIO pro každý senzor
-senzory_piny = [17, 18, 27, 22, 23, 24, 25, 4, 5, 6]
 
-# Nastavení režimu pinů GPIO
-GPIO.setmode(GPIO.BCM)
+# Pole pro ukládání stavů senzorů
+pole = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
-# Inicializace pinů senzorů jako vstupy
-for pin in senzory_piny:
-	GPIO.setup(pin, GPIO.IN)
+# Funkce pro čtení stavu senzorů a zápis do pole
+def cteni_stavu_senzoru():
+    global pole
+    for i, senzor in enumerate(senzory):
+        pole[i] = 1 if senzor.is_pressed else 0
 
-# Inicializace klasického pole pro ukládání stavů senzorů
-stavy_senzoru = [0] * 10
+# Definice pinů pro optické senzory
+piny_senzoru = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # Upravte podle skutečných pinů na vaší desce
 
-# Funkce pro aktualizaci stavů senzorů v poli
-def aktualizovat_stavy_senzoru():
-	for i, pin in enumerate(senzory_piny):
-		stavy_senzoru[i] = GPIO.input(pin)
+# Inicializace optických senzorů
+senzory = [Button(pin) for pin in piny_senzoru]
 
-try:
-	while True:
-		aktualizovat_stavy_senzoru()
-		print("Stavy senzorů:", stavy_senzoru)
-		time.sleep(1)  # Čekej 1 sekundu před dalším čtením
-except KeyboardInterrupt:
-	GPIO.cleanup()  # Uklidíme GPIO piny při ukončení programu
+# Funkce pro měření stavu senzorů každou sekundu
+def mereni_senzoru():
+    while True:
+        cteni_stavu_senzoru()
+        time.sleep(1)
+
+# Spuštění funkce pro měření senzorů v novém vlákně
+from threading import Thread
+thread = Thread(target=mereni_senzoru)
+thread.start()
+
+
 #Zde jdu kontrolovat napájení arduina. Pokud nebude arduino napájené, tak vyskočí error okno na panelu.
 arduino = Button(17)
 
@@ -170,7 +173,7 @@ def Info():
 
 
 
-#					  !!!záhlaví!!! - to je furt stejné
+#                      !!!záhlaví!!! - to je furt stejné
 
 zahlaví = Box(app, width = "fill", align ="top")
 image1 = Picture(zahlaví, image = "logo_skoly.png", align = "left")
@@ -180,7 +183,7 @@ image2 = Picture(zahlaví, image = "logo_prace.png", align = "right")
 
 
 
-#					   !!!Main.Page!!!
+#                       !!!Main.Page!!!
 
 Hlavni_stranka = Box(app)
 
@@ -189,7 +192,7 @@ hlavni_text_H.text_size = 55
 hlavni_text_H.font = "Calibry"
 
 
-#			   !!!tlačítka Naskladnit a vyskladnit!!!
+#               !!!tlačítka Naskladnit a vyskladnit!!!
 tlacitovy_box = Box(Hlavni_stranka, width = "fill", align = "bottom", border = 4)
 button1 = PushButton (tlacitovy_box, Vyskladnit, text="Vyskladnit", align = "left")
 button1.text_size = 50
@@ -202,568 +205,147 @@ button2.font = "Calibry"
 #__________________________________________________________________________________________________
 
 
-
-
-#				   !!!Zaskladnit!!!
+#                   !!!Zaskladnit!!!
 Zaskladnit_menu = Box(app)
 Zaskladnit_menu.hide()
 regal = Box(Zaskladnit_menu, width = "400",layout="grid", align = "top", border = 4)
-def
-	def Policko9():
-	print("Požadavek na polohu 9")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[0] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 9 je obsazeno.")
-	else:
-		print("Policko 9 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P2 Z1\n')
+def Policko9():
+    zpracuj_policko(0, b'G2 P2 Z1\n')
 
 def Policko8():
-	print("Požadavek na polohu 8")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(1, b'G2 P3 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[1] == 1:  # Index 8 odpovídá osmému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 8 je obsazeno.")
-	else:
-		print("Policko 8 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P3 Z1\n')
-
-		for l in ser.readline():
-			line = ser.readline()
-			print(line)
 def Policko7():
-	print("Požadavek na polohu 7")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[2] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 7 je obsazeno.")
-	else:
-		print("Policko 7 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P4 Z1\n')
+    zpracuj_policko(2, b'G2 P4 Z1\n')
 
 def Policko6():
-	print("Požadavek na polohu 6")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(3, b'G2 P5 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[3] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 6 je obsazeno.")
-	else:
-		print("Policko 6 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P5 Z1\n')
-
-	
 def Policko5():
-	print("Požadavek na polohu 5")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(4, b'G2 P6 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[4] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 5 je obsazeno.")
-	else:
-		print("Policko 5 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P6 Z1\n')
-		
 def Policko4():
-	print("Požadavek na polohu 4")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(5, b'G2 P7 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[5] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 4 je obsazeno.")
-	else:
-		print("Policko 4 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P7 Z1\n')
-		
 def Policko3():
-	print("Požadavek na polohu 3")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[6] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 3 je obsazeno.")
-	else:
-		print("Policko 3 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P8 Z1\n')
+    zpracuj_policko(6, b'G2 P8 Z1\n')
 
 def Policko2():
-	print("Požadavek na polohu 2")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(7, b'G2 P9 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[7] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 2 je obsazeno.")
-	else:
-		print("Policko 2 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P9 Z1\n')
-		
 def Policko1():
-	print("Požadavek na polohu 1")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(8, b'G2 P10 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[8] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 1 je obsazeno.")
-	else:
-		print("Policko 1 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P10 Z1\n')
-		
 def Policko0():
-	print("Požadavek na polohu 0")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko(9, b'G2 P11 Z1\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.hide()
-	Zaskladnit_menu.show()
-	Info_menu.hide()
+def zpracuj_policko(index, prikaz):
+    print(f"Požadavek na polohu {index}")  
+    print("Čeká na info OK od Arduina") 
+    
+    if pole[index] == 0:
+        Hlavni_stranka.hide()
+        Servisni_menu.hide()
+        Vyskladnit_menu.hide()
+        Zaskladnit_menu.show()
+        Info_menu.hide()
 
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[9] == 1:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 0 je obsazeno.")
-	else:
-		print("Policko 0 je volno.")
-		#policko neobsazene
-		ser.write(b'G2 P11 Z1\n')
-		
+        upozorneni.hide()
+        hlavni_text_Z.show()
+        hlavni_text_S.hide()
+        button_zpet.show()
+        button_info.hide()
+        button_service.hide()
+
+        ser.write(prikaz)  # Provádí sériovou komunikaci s příslušným příkazem
+        # Neprovádí se aktualizace pole pole[index] = 1
+    else:
+        # V případě, že prvek s daným indexem v poli není roven nule
+        print(f"Policko {index} již obsazeno.")
+        # Zde můžete provést další akce, pokud je políčko již obsazeno
+
 
 hlavni_text_Z = Text(zahlaví, "Vyberte pozici")
 hlavni_text_Z.text_size = 55
 hlavni_text_Z.font = "Calibry"
 hlavni_text_Z.hide()
 
+
+
 #Pokud není tlačítko zmáčknuté - zobrazí se toto
-# Inicializace tlačítek pro jednotlivá políčka regálu s výchozím obrázkem
-Policko_9 = PushButton(regal, Policko9, image="logo_do_regalu_off.png", grid=[0, 0])
-Policko_8 = PushButton(regal, Policko8, image="logo_do_regalu_off.png", grid=[1, 0])
-Policko_7 = PushButton(regal, Policko7, image="logo_do_regalu_off.png", grid=[2, 0])
-Policko_6 = PushButton(regal, Policko6, image="logo_do_regalu_off.png", grid=[3, 0])ppp
-Policko_5 = PushButton(regal, Policko5, image="logo_do_regalu_off.png", grid=[4, 0])
-Policko_4 = PushButton(regal, Policko4, image="logo_do_regalu_off.png", grid=[0, 1])
-Policko_3 = PushButton(regal, Policko3, image="logo_do_regalu_off.png", grid=[1, 1])
-Policko_2 = PushButton(regal, Policko2, image="logo_do_regalu_off.png", grid=[2, 1])
-Policko_1 = PushButton(regal, Policko1, image="logo_do_regalu_off.png", grid=[3, 1])
-Policko_0 = PushButton(regal, Policko0, image="logo_do_regalu_off.png", grid=[4, 1])
-
-# Definice podmínek pro změnu obrázků tlačítek
-if stavy_senzoru[0] == 1:
-	Policko_9.image = "logo_do_regalu_on.png"
-if stavy_senzoru[1] == 1:
-	Policko_8.image = "logo_do_regalu_on.png"
-if stavy_senzoru[2] == 1:
-	Policko_7.image = "logo_do_regalu_on.png"
-if stavy_senzoru[3] == 1:
-	Policko_6.image = "logo_do_regalu_on.png"
-if stavy_senzoru[4] == 1:
-	Policko_5.image = "logo_do_regalu_on.png"
-if stavy_senzoru[5] == 1:
-	Policko_4.image = "logo_do_regalu_on.png"
-if stavy_senzoru[6] == 1:
-	Policko_3.image = "logo_do_regalu_on.png"
-if stavy_senzoru[7] == 1:
-	Policko_2.image = "logo_do_regalu_on.png"
-if stavy_senzoru[8] == 1:
-	Policko_1.image = "logo_do_regalu_on.png"
-if stavy_senzoru[9] == 1:
-	Policko_0.image = "logo_do_regalu_on.png"
-
-
+Policko_9 = PushButton(regal, Policko9, image = "logo_do_regalu.png", grid=[0,0])
+Policko_8 = PushButton(regal, Policko8, image = "logo_do_regalu.png", grid=[1,0])
+Policko_7 = PushButton(regal, Policko7, image = "logo_do_regalu.png", grid=[2,0])
+Policko_6 = PushButton(regal, Policko6, image = "logo_do_regalu.png", grid=[3,0])
+Policko_5 = PushButton(regal, Policko5, image = "logo_do_regalu.png", grid=[4,0])
+Policko_4 = PushButton(regal, Policko4, image = "logo_do_regalu.png", grid=[0,1])
+Policko_3 = PushButton(regal, Policko3, image = "logo_do_regalu.png", grid=[1,1])
+Policko_2 = PushButton(regal, Policko2, image = "logo_do_regalu.png", grid=[2,1])
+Policko_1 = PushButton(regal, Policko1, image = "logo_do_regalu.png", grid=[3,1])
+Policko_0 = PushButton(regal, Policko0, image = "logo_do_regalu.png", grid=[4,1])
 
 #________________________________________________________________________________________________
 
 
-
-#				   !!!Vyskladnit!!!
+#                   !!!Vyskladnit!!!
 Vyskladnit_menu = Box(app)
 Vyskladnit_menu.hide()
 regal2 = Box(Vyskladnit_menu, width = "400",layout="grid", align = "top", border = 4)
-
 def Policko9():
-	print("Požadavek na polohu 9")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(0, b'G2 P2 Z2\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[0] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 9 je volné.")
-   	else:
-		print("Policko 9 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P2 Z2\n')
-		
 def Policko8():
-	print("Požadavek na polohu 8")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[1] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 8 je volné.")
-	else:
-		print("Policko 8 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P3 Z2\n')
+    zpracuj_policko_vyskl(1, b'G2 P3 Z2\n')
 
 def Policko7():
-	print("Požadavek na polohu 7")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[2] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 7 je volné.")
-	else:
-		print("Policko 7 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P4 Z2\n')
+    zpracuj_policko_vyskl(2, b'G2 P4 Z2\n')
 
 def Policko6():
-	print("Požadavek na polohu 6")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[3] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 6 je volné.")
-	else:
-		print("Policko 6 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P5 Z2\n')
+    zpracuj_policko_vyskl(3, b'G2 P5 Z2\n')
 
 def Policko5():
-	print("Požadavek na polohu 5")  
-	print("Čeká na potvrzení od Arduina") 
-
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[4] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 5 je volné.")
-	else:
-		print("Policko 5 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P6 Z2\n')
+    zpracuj_policko_vyskl(4, b'G2 P6 Z2\n')
 
 def Policko4():
-	print("Požadavek na polohu 4")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(5, b'G2 P7 Z2\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[5] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 4 je volné.")
-	else:
-		print("Policko 4 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P7 Z2\n') 
-		 
 def Policko3():
-	print("Požadavek na polohu 3")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(6, b'G2 P8 Z2n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[6] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 3 je volné.")
-	else:
-		print("Policko 3 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P8 Z2\n')
-		
 def Policko2():
-	print("Požadavek na polohu 8")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(7, b'G2 P9 Z2\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[7] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 2 je volné.")
-	else:
-		print("Policko 2 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P9 Z2\n') 
-		
 def Policko1():
-	print("Požadavek na polohu 1")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(8, b'G2 P10 Z2\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
-
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[8] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 1 je volné.")
-	else:
-		print("Policko 1 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P10 Z2\n')
-		
 def Policko0():
-	print("Požadavek na polohu 0")  
-	print("Čeká na potvrzení od Arduina") 
+    zpracuj_policko_vyskl(9, b'G2 P11 Z2\n')
 
-	# Skryjeme a zobrazíme potřebné prvky GUI podle potřeby
-	Hlavni_stranka.hide()
-	Servisni_menu.hide()
-	Vyskladnit_menu.show()
-	Zaskladnit_menu.hide()
-	Info_menu.hide()
+def zpracuj_policko_vyskl(index, prikaz):
+    print(f"Požadavek na polohu {index}")  
+    print("Čeká na info OK od Arduina") 
+    
+    if pole[index] == 1:
+        Hlavni_stranka.hide()
+        Servisni_menu.hide()
+        Vyskladnit_menu.hide()
+        Zaskladnit_menu.show()
+        Info_menu.hide()
 
-	upozorneni.hide()
-	hlavni_text_Z.show()
-	hlavni_text_S.hide()
-	button_zpet.show()
-	button_info.hide()
-	button_service.hide()
-	 # Čtení stavu senzorů ze vstupního pole
-	if pole[9] == 0:  # Index 8 odpovídá devátému senzoru, protože indexování v Pythonu začíná od 0
-		print("Policko 0 je volné.")
-	else:
-		print("Policko 0 je obsazené.")
-		#policko neobsazene
-		ser.write(b'G2 P11 Z2\n')
+        upozorneni.hide()
+        hlavni_text_Z.show()
+        hlavni_text_S.hide()
+        button_zpet.show()
+        button_info.hide()
+        button_service.hide()
+
+        ser.write(prikaz)  # Provádí sériovou komunikaci s příslušným příkazem
+        # Neprovádí se aktualizace pole pole[index] = 1
+    else:
+        # V případě, že prvek s daným indexem v poli není roven nule
+        print(f"Policko {index} již obsazeno.")
+        # Zde můžete provést další akce, pokud je políčko již obsazeno
+
 
 hlavni_text_V = Text(zahlaví, "Vyberte pozici")
 hlavni_text_V.text_size = 55
@@ -771,42 +353,20 @@ hlavni_text_V.font = "Calibry"
 hlavni_text_V.hide()
 
 
-Policko_9 = PushButton(regal2, Policko9, image="logo_do_regalu_off.png", grid=[0, 0])
-Policko_8 = PushButton(regal2, Policko8, image="logo_do_regalu_off.png", grid=[1, 0])
-Policko_7 = PushButton(regal2, Policko7, image="logo_do_regalu_off.png", grid=[2, 0])
-Policko_6 = PushButton(regal2, Policko6, image="logo_do_regalu_off.png", grid=[3, 0])
-Policko_5 = PushButton(regal2, Policko5, image="logo_do_regalu_off.png", grid=[4, 0])
-Policko_4 = PushButton(regal2, Policko4, image="logo_do_regalu_off.png", grid=[0, 1])
-Policko_3 = PushButton(regal2, Policko3, image="logo_do_regalu_off.png", grid=[1, 1])
-Policko_2 = PushButton(regal2, Policko2, image="logo_do_regalu_off.png", grid=[2, 1])
-Policko_1 = PushButton(regal2, Policko1, image="logo_do_regalu_off.png", grid=[3, 1])
-Policko_0 = PushButton(regal2, Policko0, image="logo_do_regalu_off.png", grid=[4, 1])
-
-# Definice podmínek pro změnu obrázků tlačítek
-if stavy_senzoru[0] == 1:
-	Policko_9.image = "logo_do_regalu_on.png"
-if stavy_senzoru[1] == 1:
-	Policko_8.image = "logo_do_regalu_on.png"
-if stavy_senzoru[2] == 1:
-	Policko_7.image = "logo_do_regalu_on.png"
-if stavy_senzoru[3] == 1:
-	Policko_6.image = "logo_do_regalu_on.png"
-if stavy_senzoru[4] == 1:
-	Policko_5.image = "logo_do_regalu_on.png"
-if stavy_senzoru[5] == 1:
-	Policko_4.image = "logo_do_regalu_on.png"
-if stavy_senzoru[6] == 1:
-	Policko_3.image = "logo_do_regalu_on.png"
-if stavy_senzoru[7] == 1:
-	Policko_2.image = "logo_do_regalu_on.png"
-if stavy_senzoru[8] == 1:
-	Policko_1.image = "logo_do_regalu_on.png"
-if stavy_senzoru[9] == 1:
-	Policko_0.image = "logo_do_regalu_on.png"
+Policko_9 = PushButton(regal2, Policko9, image = "logo_do_regalu.png", grid=[0,0])
+Policko_8 = PushButton(regal2, Policko8, image = "logo_do_regalu.png", grid=[1,0])
+Policko_7 = PushButton(regal2, Policko7, image = "logo_do_regalu.png", grid=[2,0])
+Policko_6 = PushButton(regal2, Policko6, image = "logo_do_regalu.png", grid=[3,0])
+Policko_5 = PushButton(regal2, Policko5, image = "logo_do_regalu.png", grid=[4,0])
+Policko_4 = PushButton(regal2, Policko4, image = "logo_do_regalu.png", grid=[0,1])
+Policko_3 = PushButton(regal2, Policko3, image = "logo_do_regalu.png", grid=[1,1])
+Policko_2 = PushButton(regal2, Policko2, image = "logo_do_regalu.png", grid=[2,1])
+Policko_1 = PushButton(regal2, Policko1, image = "logo_do_regalu.png", grid=[3,1])
+Policko_0 = PushButton(regal2, Policko0, image = "logo_do_regalu.png", grid=[4,1])
 
 #_____________________________________________________________________________________________________
 
-#						   !!!Servisní Menu!!!
+#                           !!!Servisní Menu!!!
 Servisni_menu = Box(app)
 Servisni_menu.hide()
 
@@ -888,7 +448,7 @@ Z_minus = PushButton(stred, Z_minusa, text = "Z minus", image = "Zminus.png", gr
 #_____________________________________________________________________________________________________
 
 
-#						   !!!Error Menu!!!
+#                           !!!Error Menu!!!
 Error_menu = Box(app)
 Error_menu.hide()
 
@@ -905,7 +465,7 @@ text_error3.size = 15
 Error_okno.hide()
 
 #_________________________________________________________________________________________________
-#					   !!!zápatí!!!
+#                       !!!zápatí!!!
 zapati = Box(app, width = "fill", align = "bottom")
 button_service = PushButton(zapati, Service,image = "service.png", align = "left")
 button_service.show()
