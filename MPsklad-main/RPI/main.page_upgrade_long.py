@@ -12,6 +12,7 @@ app.bg = "#ff4d06"
 # Pole pro ukládání stavů senzorů
 pole = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 
+
 # Funkce pro čtení stavu senzorů a zápis do pole
 def cteni_stavu_senzoru():
     global pole
@@ -35,7 +36,7 @@ from threading import Thread
 thread = Thread(target=mereni_senzoru)
 thread.start()
 
-
+zobraz_obrazky()
 #Zde jdu kontrolovat napájení arduina. Pokud nebude arduino napájené, tak vyskočí error okno na panelu.
 arduino = Button(17)
 
@@ -270,37 +271,17 @@ hlavni_text_Z.text_size = 55
 hlavni_text_Z.font = "Calibry"
 hlavni_text_Z.hide()
 
+from guizero import *
 
-
-def zobraz_obrazek():
-    for index in range(len(pole)):
+# Funkce pro zobrazení obrázků na základě stavu pole
+def zobraz_obrazky():
+    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
         if pole[index] == 1:
-            new_image = "logo_do_regalu_on.png"
+            policko.image = "logo_do_regalu_on.png"
         else:
-            new_image = "logo_do_regalu_off.png"
+            policko.image = "logo_do_regalu_off.png"
 
-        if index == 0:
-            Policko_9.image = new_image
-        elif index == 1:
-            Policko_8.image = new_image
-        elif index == 2:
-            Policko_7.image = new_image
-        elif index == 3:
-            Policko_6.image = new_image
-        elif index == 4:
-            Policko_5.image = new_image
-        elif index == 5:
-            Policko_4.image = new_image
-        elif index == 6:
-            Policko_3.image = new_image
-        elif index == 7:
-            Policko_2.image = new_image
-        elif index == 8:
-            Policko_1.image = new_image
-        elif index == 9:
-            Policko_0.image = new_image
-
-# Aktualizovaná definice tlačítek s výchozím obrázkem
+# Vytvoření tlačítek s obrazky
 Policko_9 = PushButton(regal, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
 Policko_8 = PushButton(regal, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
 Policko_7 = PushButton(regal, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
@@ -311,6 +292,9 @@ Policko_3 = PushButton(regal, Policko3, image="logo_do_regalu_off.png", grid=[1,
 Policko_2 = PushButton(regal, Policko2, image="logo_do_regalu_off.png", grid=[2,1])
 Policko_1 = PushButton(regal, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
 Policko_0 = PushButton(regal, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
+
+
+
 
 
 #________________________________________________________________________________________________
@@ -382,35 +366,16 @@ hlavni_text_V.font = "Calibry"
 hlavni_text_V.hide()
 
 
-def zobraz_obrazek():
-    for index in range(len(pole)):
+
+# Funkce pro zobrazení obrázků na základě stavu pole
+def zobraz_obrazky():
+    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
         if pole[index] == 1:
-            new_image = "logo_do_regalu_on.png"
+            policko.image = "logo_do_regalu_on.png"
         else:
-            new_image = "logo_do_regalu_off.png"
+            policko.image = "logo_do_regalu_off.png"
 
-        if index == 0:
-            Policko_9.image = new_image
-        elif index == 1:
-            Policko_8.image = new_image
-        elif index == 2:
-            Policko_7.image = new_image
-        elif index == 3:
-            Policko_6.image = new_image
-        elif index == 4:
-            Policko_5.image = new_image
-        elif index == 5:
-            Policko_4.image = new_image
-        elif index == 6:
-            Policko_3.image = new_image
-        elif index == 7:
-            Policko_2.image = new_image
-        elif index == 8:
-            Policko_1.image = new_image
-        elif index == 9:
-            Policko_0.image = new_image
-
-# Aktualizovaná definice tlačítek s výchozím obrázkem
+# Vytvoření tlačítek s obrazky
 Policko_9 = PushButton(regal2, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
 Policko_8 = PushButton(regal2, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
 Policko_7 = PushButton(regal2, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
@@ -421,6 +386,9 @@ Policko_3 = PushButton(regal2, Policko3, image="logo_do_regalu_off.png", grid=[1
 Policko_2 = PushButton(regal2, Policko2, image="logo_do_regalu_off.png", grid=[2,1])
 Policko_1 = PushButton(regal2, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
 Policko_0 = PushButton(regal2, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
+
+# Zobrazit obrázky při spuštění programu
+
 
 
 #_____________________________________________________________________________________________________
