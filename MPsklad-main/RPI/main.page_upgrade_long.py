@@ -289,23 +289,6 @@ Policko_2 = PushButton(regal, Policko2, image="logo_do_regalu_off.png", grid=[2,
 Policko_1 = PushButton(regal, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
 Policko_0 = PushButton(regal, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
 
-# Funkce pro zobrazení obrázků na základě stavu pole
-def zobraz_obrazky():
-    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
-        if pole[index] == 1:
-            policko.image = "logo_do_regalu_on.png"
-        else:
-            policko.image = "logo_do_regalu_off.png"
-
-# Neustálá aktualizace obrázků jen v případě změny stavu pole
-last_pole = list(pole)
-while True:
-    if pole != last_pole:
-        zobraz_obrazky()
-        last_pole = list(pole)
-    time.sleep(30)  # Počkej 30 sekund, než se provede další kontrola změny stavu
-
-
 
 
 
@@ -393,21 +376,6 @@ Policko_2 = PushButton(regal2, Policko2, image="logo_do_regalu_off.png", grid=[2
 Policko_1 = PushButton(regal2, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
 Policko_0 = PushButton(regal2, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
 
-# Funkce pro zobrazení obrázků na základě stavu pole
-def zobraz_obrazky():
-    for index, policko in enumerate([Policko_9, Policko_8, Policko_7, Policko_6, Policko_5, Policko_4, Policko_3, Policko_2, Policko_1, Policko_0]):
-        if pole[index] == 1:
-            policko.image = "logo_do_regalu_on.png"
-        else:
-            policko.image = "logo_do_regalu_off.png"
-
-# Neustálá aktualizace obrázků jen v případě změny stavu pole
-last_pole = list(pole)
-while True:
-    if pole != last_pole:
-        zobraz_obrazky()
-        last_pole = list(pole)
-    time.sleep(30)  # Počkej 30 sekund, než se provede další kontrola změny stavu
 
 
 
