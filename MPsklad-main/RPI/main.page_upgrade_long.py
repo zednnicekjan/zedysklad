@@ -19,7 +19,7 @@ def cteni_stavu_senzoru():
         pole[i] = 1 if senzor.is_pressed else 0
 
 # Definice pinů pro optické senzory
-piny_senzoru = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11]  # Upravte podle skutečných pinů na vaší desce
+piny_senzoru = [21, 20, 16, 12, 1, 7, 8, 9, 10, 11]  # Upravte podle skutečných pinů na vaší desce
 
 # Inicializace optických senzorů
 senzory = [Button(pin) for pin in piny_senzoru]
@@ -272,17 +272,46 @@ hlavni_text_Z.hide()
 
 
 
-#Pokud není tlačítko zmáčknuté - zobrazí se toto
-Policko_9 = PushButton(regal, Policko9, image = "logo_do_regalu_off.png", grid=[0,0])
-Policko_8 = PushButton(regal, Policko8, image = "logo_do_regalu_off.png", grid=[1,0])
-Policko_7 = PushButton(regal, Policko7, image = "logo_do_regalu_off.png", grid=[2,0])
-Policko_6 = PushButton(regal, Policko6, image = "logo_do_regalu_off.png", grid=[3,0])
-Policko_5 = PushButton(regal, Policko5, image = "logo_do_regalu_off.png", grid=[4,0])
-Policko_4 = PushButton(regal, Policko4, image = "logo_do_regalu_off.png", grid=[0,1])
-Policko_3 = PushButton(regal, Policko3, image = "logo_do_regalu_off.png", grid=[1,1])
-Policko_2 = PushButton(regal, Policko2, image = "logo_do_regalu_off.png", grid=[2,1])
-Policko_1 = PushButton(regal, Policko1, image = "logo_do_regalu_off.png", grid=[3,1])
-Policko_0 = PushButton(regal, Policko0, image = "logo_do_regalu_off.png", grid=[4,1])
+def zobraz_obrazek():
+    for index in range(len(pole)):
+        if pole[index] == 1:
+            new_image = "logo_do_regalu_on.png"
+        else:
+            new_image = "logo_do_regalu_off.png"
+
+        if index == 0:
+            Policko_9.image = new_image
+        elif index == 1:
+            Policko_8.image = new_image
+        elif index == 2:
+            Policko_7.image = new_image
+        elif index == 3:
+            Policko_6.image = new_image
+        elif index == 4:
+            Policko_5.image = new_image
+        elif index == 5:
+            Policko_4.image = new_image
+        elif index == 6:
+            Policko_3.image = new_image
+        elif index == 7:
+            Policko_2.image = new_image
+        elif index == 8:
+            Policko_1.image = new_image
+        elif index == 9:
+            Policko_0.image = new_image
+
+# Aktualizovaná definice tlačítek s výchozím obrázkem
+Policko_9 = PushButton(regal, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
+Policko_8 = PushButton(regal, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
+Policko_7 = PushButton(regal, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
+Policko_6 = PushButton(regal, Policko6, image="logo_do_regalu_off.png", grid=[3,0])
+Policko_5 = PushButton(regal, Policko5, image="logo_do_regalu_off.png", grid=[4,0])
+Policko_4 = PushButton(regal, Policko4, image="logo_do_regalu_off.png", grid=[0,1])
+Policko_3 = PushButton(regal, Policko3, image="logo_do_regalu_off.png", grid=[1,1])
+Policko_2 = PushButton(regal, Policko2, image="logo_do_regalu_off.png", grid=[2,1])
+Policko_1 = PushButton(regal, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
+Policko_0 = PushButton(regal, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
+
 
 #________________________________________________________________________________________________
 
@@ -353,16 +382,46 @@ hlavni_text_V.font = "Calibry"
 hlavni_text_V.hide()
 
 
-Policko_9 = PushButton(regal2, Policko9, image = "logo_do_regalu_off.png", grid=[0,0])
-Policko_8 = PushButton(regal2, Policko8, image = "logo_do_regalu_off.png", grid=[1,0])
-Policko_7 = PushButton(regal2, Policko7, image = "logo_do_regalu_off.png", grid=[2,0])
-Policko_6 = PushButton(regal2, Policko6, image = "logo_do_regalu_off.png", grid=[3,0])
-Policko_5 = PushButton(regal2, Policko5, image = "logo_do_regalu_off.png", grid=[4,0])
-Policko_4 = PushButton(regal2, Policko4, image = "logo_do_regalu_off.png", grid=[0,1])
-Policko_3 = PushButton(regal2, Policko3, image = "logo_do_regalu_off.png", grid=[1,1])
-Policko_2 = PushButton(regal2, Policko2, image = "logo_do_regalu_off.png", grid=[2,1])
-Policko_1 = PushButton(regal2, Policko1, image = "logo_do_regalu_off.png", grid=[3,1])
-Policko_0 = PushButton(regal2, Policko0, image = "logo_do_regalu_off.png", grid=[4,1])
+def zobraz_obrazek():
+    for index in range(len(pole)):
+        if pole[index] == 1:
+            new_image = "logo_do_regalu_on.png"
+        else:
+            new_image = "logo_do_regalu_off.png"
+
+        if index == 0:
+            Policko_9.image = new_image
+        elif index == 1:
+            Policko_8.image = new_image
+        elif index == 2:
+            Policko_7.image = new_image
+        elif index == 3:
+            Policko_6.image = new_image
+        elif index == 4:
+            Policko_5.image = new_image
+        elif index == 5:
+            Policko_4.image = new_image
+        elif index == 6:
+            Policko_3.image = new_image
+        elif index == 7:
+            Policko_2.image = new_image
+        elif index == 8:
+            Policko_1.image = new_image
+        elif index == 9:
+            Policko_0.image = new_image
+
+# Aktualizovaná definice tlačítek s výchozím obrázkem
+Policko_9 = PushButton(regal2, Policko9, image="logo_do_regalu_off.png", grid=[0,0])
+Policko_8 = PushButton(regal2, Policko8, image="logo_do_regalu_off.png", grid=[1,0])
+Policko_7 = PushButton(regal2, Policko7, image="logo_do_regalu_off.png", grid=[2,0])
+Policko_6 = PushButton(regal2, Policko6, image="logo_do_regalu_off.png", grid=[3,0])
+Policko_5 = PushButton(regal2, Policko5, image="logo_do_regalu_off.png", grid=[4,0])
+Policko_4 = PushButton(regal2, Policko4, image="logo_do_regalu_off.png", grid=[0,1])
+Policko_3 = PushButton(regal2, Policko3, image="logo_do_regalu_off.png", grid=[1,1])
+Policko_2 = PushButton(regal2, Policko2, image="logo_do_regalu_off.png", grid=[2,1])
+Policko_1 = PushButton(regal2, Policko1, image="logo_do_regalu_off.png", grid=[3,1])
+Policko_0 = PushButton(regal2, Policko0, image="logo_do_regalu_off.png", grid=[4,1])
+
 
 #_____________________________________________________________________________________________________
 
